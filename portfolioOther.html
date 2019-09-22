@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My Project Portfolio</title>
+		<meta charset="utf-8" />
+		<link href="portfolio.css" type="text/css" rel="stylesheet" />
+		<link rel="icon" type="image/png" href="uwFavicon.png">
+	</head>
+	
+	<body>
+		<div id="wrapper">
+			<div id="header"><h1>Yi-Ting Tsai <br/>My Project Portfolio</h1></div>
+				
+			<ul id="navigator">
+				<li class="naviItems"><a href="portfolioHome.html">Home</a></li>
+				<li class="naviItems"><a href="portfolioEE.html">Digital Signal &amp; Image Processing Projects</a></li>
+				<li class="naviItems"><a id="nowItem" href="portfolioOther.html">Other Projects</a></li>
+			</ul>
+			
+			<div id="introBlock">
+				<h2>Other Projects</h2>
+				
+				<p class="subtitle">64-bit ARM Pipelined CPU:</p>
+				<p><span>Associated Course:</span> Computer Architecture</p>
+				<p><span>Keys Words:</span> CPU, Pipelining, ARM Assembly Language, Machine Code, Register File, ALU, Memory, 
+				Digital Logic Design, SystemVerilog, Data Hazard, Control Hazard, Data Forwarding</p>
+				<p><span>Description:</span> In this project, I designed and implemented a 64-bit ARM 5-stage Pipelined CPU using SystemVerilog. 
+				It can run the following ARM instructions: </p>
+				<ul>
+					<li>ADDI Rd, Rn, #Imm12</li>
+					<li>ADDS Rd, Rn, Rm</li>
+					<li>B #Imm26</li>
+					<li>B.LT #Imm19</li>
+					<li>CBZ Rd, #Imm19</li>
+					<li>LDUR Rd, [Rn, #Imm9]</li>
+					<li>LDURB Rd, [Rn, #Imm9]</li>
+					<li>MOVK Rd, #Imm16, LSL #Shift</li>
+					<li>MOVZ Rd, #Imm16, LSL #Shift</li>
+					<li>STUR Rd, [Rn, #Imm9]</li>
+					<li>STURB Rd, [Rn, #Imm9]</li>
+					<li>SUBS Rd, Rn, Rm</li>
+				</ul>
+				<p>The pipelined CPU has 5 stages: Instruction Fetch, Register Fetch and Instruction Decode, Execute, Memory Access,
+				and Register Writeback. During each clock cycle, the first four stages update and output their corresponding data and control signals 
+				to the stage registers, while the Writeback stage only works as the Write ports of the Register File in the Register Fetch stage.</p>
+				<img src="ee469lab/pipelined_cpu.jpg" alt="469labcpu" height="500px" width="850px"/>
+				<p><i>(1) The Overall Block Diagram of the CPU</i></p>
+				<p>The Ifetch stage updates the program counter and fetches its corresponding instruction each cycle. To avoid control hazard, a delay slot 
+				is needed after each branch instruction. It can be a no-op or an insturction that needs to be excecuted no matter the branch condition. 
+				Since I chose to update the branched PC at the end of the Reg/Dec stage instead of at the Exec stage, calculations are accelerated. Therefore, 
+				only one delay slot instead of two are required to stall these branch instructions.</p>
+				<img src="ee469lab/ifetch.jpg" alt="469labifetch" height="250px" width="500px"/>
+				<img src="ee469lab/reg_branch.jpg" alt="469labifetch" height="200px" width="450px"/>
+				<p><i>(2) Datapath for the Ifetch stage (3) Datapath for the branch-related part in the Reg/Dec stage. Left shift (multiplication) is 
+				used after sign extension because our PC is incremented by 4.</i></p>
+				<p>In the Reg/Dec stage, control signals (except Branch_Taken, which is determined based on flags) and registers needed are decoded based on the 
+				32-bit instruction's opcode, etc. Another major part in the Reg/Dec stage is to read data from the Register File. To avoid data hazard, a forwarding 
+				unit is used to determine whether we need to fetch data outputs of previous instructions from the Exec and Mem stages. However, even with the forwarding 
+				unit, we still need one delay slot for each load instruction (similar to branch instructions).</p>
+				<img src="ee469lab/reg.jpg" alt="469labreg" height="300px" width="580px"/>
+				<img src="ee469lab/forward.jpg" alt="469labforward" height="200px" width="400px"/>
+				<p><i>(4) The Regfile in the Reg/Dec stage (5) The forwarding unit in the Reg/Dec stage</i></p>
+				<p>In the Exec stage, arithmetic operations are done. Data to be stored/loaded or memory addresses to be used are calculated. The main component 
+				in this stage is the Arithmetic Logic Unit. The ALU I designed can do the following operations: pass B, A+B, A-B, bitwise A &amp; B, 
+				bitwise A | B, bitwise A XOR B.</p>
+				<img src="ee469lab/alu.jpg" alt="469labalu" height="300px" width="350px"/>
+				<p><i>(6) The ALU in the Exec stage</i></p>
+				<p>In the Mem stage, data are loaded/stored from/to the data memory. Eventually, the data to be written to the Regfile will be passed on to the Wr stage.</p>
+				<img src="ee469lab/datamem.jpg" alt="469labmem" height="300px" width="500px"/>
+				<p><i>(7) Basic Datapath of the Mem stage</i></p>
+				<img src="ee469lab/test.jpg" alt="469labtest" height="400px" width="940px"/>
+				<p><i>(8) Testing the CPU in ModelSim</i></p>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle">Game - Snake &amp; Apples:</p>
+				<p><span>Associated Course:</span> Digital Circuits and Systems</p>
+				<p><span>Keys Words:</span> Digital Logic Design, SystemVerilog, FPGA, DE1-SoC board, Finite State Machine, Linear Feedback Shift Register (LFSR), Counter</p>
+				<p><span>Description:</span> In this project, I developed an implementation of the <a target="_blank" href="https://en.wikipedia.org/wiki/Snake_(video_game)">snake game</a> 
+				on a DE1-SoC board using SystemVerilog. The playground is an 8x8 LED array, and each LED is a finite state machine that reacts based on the states its neighboring  
+				LEDs are in. On the array board, the snake (green dots) moves around looking for apples (red dots, random locations made by LFSR). When 
+				the head hits the apple, the snake scores a point, and grows longer. If the snake ever runs over its own tail, it dies. The speed of the snake 
+				can be set by the switches on the board, and the direction of the snake can be controlled by the push buttons beside the switches.</p>
+				<iframe width="400" height="300" src="https://www.youtube.com/embed/pufC3rpON80" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>Your browser does not support iframe tag.</iframe>
+				<br/>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle">Game - Tug of War:</p>
+				<p><span>Associated Course:</span> Digital Circuits and Systems</p>
+				<p><span>Keys Words:</span> Digital Logic Design, System Verilog, FPGA, DE1-SoC board, Finite State Machine, Linear Feedback Shift Register, Counter</p>
+				<p><span>Description:</span> In this project, I developed an implementation of a tug of war game on a DE1-SoC board using System Verilog. Each LED is a finite state 
+				machine. <br/>&nbsp;1) Two-player mode: when the game starts, only the centermost LED is lit. Each time the first player presses the KEY[0] button, the light moves one LED right. 
+				Each time the second player presses the KEY[3] button, the light moves one LED to the left. If the light ever goes off the end of the playfield, 
+				the player that moved it off the end wins, and the HEX 7-segment displays on each side will record the score. <br/>&nbsp;2) Single-player mode: same rules, but 
+				against a cyberplayer. Player can speed up or slow down the "opponent" by playing with the user switches.</p>
+				<iframe width="320" height="240" src="https://www.youtube.com/embed/yMb5LZ1qARs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>Your browser does not support iframe tag.</iframe>
+				<iframe width="320" height="240" src="https://www.youtube.com/embed/QU5k4BOZsBs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>Your browser does not support iframe tag.</iframe>
+				<p>Single-player mode &amp; Two-player mode</p>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle">Analog Audio Mixer:</p>
+				<p><span>Associated Course:</span> Circuit Theory</p>
+				<p><span>Keys Words:</span> Audio Mixer, Music Equalizer, Band-pass Filter, NI Multisim, Oscilloscope, Circuit Building, Circuit Testing</p>
+				<p><span>Description:</span> In this project, we designed three equalizer filters (band-pass) with different center frequencies by utilizing op-amps, 
+				capacitors, and potentiometers. We then built a complete audio mixer on a breadboard by combining the three-channel equalizer with elements like buffer, summing 
+				amplifier, speaker, and microphone. To explore the equalizer’s characteristics, we analyzed the output waveforms in an oscilloscope with a sine input from a function 
+				generator, and plotted different bode plots in Multisim afterwards.</p>
+				<p>In this system, there are specific roles for each part of the circuit. First, the pre-amplifier 
+				controls the microphone in the circuit. It is used to manage the amplitude of signals from the microphone, and also to remove the unnecessary noise at high 
+				frequencies. Next, the first summing amplifier is used to mix the signals of three input channels from a microphone, a laptop, and a smartphone. Each potentiometer 
+				in the summing amplifier changes the volume of each individual signal, and the potentiometer above the op-amp controls the total volume of all three channels. 
+				Finally, the buffer, the three filters and another summing amplifier form an equalizer. The buffer is used to isolate the input from the output in order to reduce 
+				impedance and to raise the current. Each filter is a band pass filter which controls the output magnitude of a specific range of frequency. We have a low range 
+				(250Hz), midrange (1kHz) and a high range (4kHz) filter. After that, a summing amplifier combines all three channels and goes to the speaker.</p>
+				<p>Equipment used: function generator, oscilloscope, power supply,  wires, cables, breadboard, capacitors, resistors, potentiometers, op-amps, 
+				multimeter, microphone, speaker, laptop for music playing.</p>
+				<img src="ee233lab/IMAG2726.jpg" alt="233lab(a)" height="240px" width="360px"/>
+				<img src="ee233lab/TransferFunction.png" alt="341lab1(b)" height="240px" width="360px"/>
+				<p><i>(1) Testing our circuit with oscilloscope (2) Testing our circuit in NI Multisim</i></p>
+				<img src="ee233lab/IMAG2728.jpg" alt="233lab(b)" height="360px" width="240px"/>
+				<img src="ee233lab/IMAG2727.jpg" alt="233lab(c)" height="240px" width="360px"/>
+				<img src="ee233lab/IMAG2706.jpg" alt="233lab(d)" height="240px" width="360px"/>
+				<p><i>(3) The finished circuit</i></p>
+				<img src="ee233lab/circuitFin.png" alt="233lab(e)" height="700px" width="770px"/>
+				<p><i>(4) The whole circuit diagram</i></p>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle">T9 Predictive Text:</p>
+				<p><span>Associated Course:</span> Programming Concepts and Tools</p>
+				<p><span>Keys Words:</span> C, Linux, Data Structures, Search Tree, Trie, Struct, Makefile</p>
+				<p><span>Description:</span> In this assignment, I built a C program (compiled in Linux with makefile and gcc) to 
+				implement <a target="_blank" href="https://en.wikipedia.org/wiki/T9_(predictive_text)">T9 predictive text</a>. 
+				In the program, a trie/tree that stores the key sequences was used. Each node in the trie will have 8 possible branches, indicating number 2-9. As we travel down 
+				a path in the trie, we reach word sequences spelled out by the numbers along that path.</p>
+				<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/220px-Telephone-keypad2.svg.png" alt="t9" height="200px" width="200px"/>
+				<p><i>(1) The T9 keypad - each number from 2-9 on the keypad represents three or four letters</i></p>
+				<p>The program will first read in a dictionary file that contains a list of words. After that, it will translate each word in the dictionary into its numeric key 
+				sequence, before adding the key sequence to my trie. The words will be attached at the end of the path corresponding to the digits. If a word with the same numeric 
+				sequence already exists in the trie, the word will be added as a link to a new node with an edge labeled '#' instead of one of the digits 2-9. Below is a demonstration
+				of the program's interactive session:</p>
+				<pre>
+	./t9 dictionary.txt
+
+	Enter "exit" to quit.
+	Enter Key Sequence (or "#" for next word):
+	> 76257
+		'pocks'
+	Enter Key Sequence (or "#" for next word):
+	> #
+		'rocks'
+	Enter Key Sequence (or "#" for next word):
+	> 53556
+		'jello'
+	Enter Key Sequence (or "#" for next word):
+	> #
+		There are no more T9onyms
+	>4423
+		Not found in current dictionary.
+	>exit
+				</pre>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle">Searching Implicit Graph - Tower of Hanoi:</p>
+				<p><span>Associated Course:</span> Data Structures and Algorithms</p>
+				<p><span>Keys Words:</span> Java, Problem-space Graph, State Space, Data Structures, Breadth-first Search</p>
+				<p><span>Description:</span> In this assignment, I implemented a problem-space graph in Java and used it to solve the 
+				<a target="_blank" href="https://en.wikipedia.org/wiki/Tower_of_Hanoi">Tower of Hanoi</a> (4 disks) with the least number of movements. 
+				In the implicit problem-space graph, each vertex represents the states reached in the course of solving the Tower, 
+				and each edge represents the transitions between these states. </p>
+				<img src="cse373/TOHGraph4.png" alt="hanoi" height="300px" width="450px"/>
+				<p><i>(1) The Problem-space Graph of the Tower of Hanoi</i></p>
+				<p>The start vertex corresponds to the problem's initial state, in which all 4 disks are on the left peg. The end 
+				vertex corresponds to the problem's final goal state, in which all 4 disks are on the right peg. By using breadth-first search (BFS), 
+				I was able to find the shortest path between the start vertex and the end vertex.</p>
+				<p>Shortest path: [4,3,2,1],[],[],[] -> [4,3,2],[1],[],[] -> [4,3],[1],[2],[] ->  [4,3],[],[2,1],[] ->  [4],[3],[2,1],[] ->  [],[3],[2,1],[4] 
+				-> [],[],[2,1],[4,3] ->  [1],[],[2],[4,3] ->  [1],[],[],[4,3,2] ->  [],[],[],[4,3,2,1]</p>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle">Database on Employee Engagement Trends:</p>
+				<p><span>Associated Course:</span> Relational Database Management Systems</p>
+				<p><span>Keys Words:</span> Relational Database, Entity Relationship Diagram (ERD), SQL, MS SQL Server, Visio, Stored Procedure, User-defined Function, 
+				Backup, Computed Column, Check Constraint, Data Purge, Data Archival, View</p>
+				<p><span>Description:</span> In this project, I diagramed (in Visio) and populated a database (using scripts and Import Wizard in MS SQL 
+				Server) with random data to simulate the explorations in employee engagement trends in a business. I developed the database by creating business 
+				rules and transactions with stored procedures and functions, and maintained the database with backups and data purge/archival.</p>
+				<p>An example stored procedure that deals with data purge/archival: If an employee still exists within the system two years after their end date, 
+				archive their data and delete it from the database </p>
+				<p>An example stored procedure that deals with transaction: Record an employee's donation.</p>
+				<p>An example user-defined function with check constraint: Employees who work less than 1 year at XXX cannot work in more than 3 teams at the same time.</p>
+				<p>An example user-defined function that sets a computed column: The average number of events each employee registers for per year since he/she has 
+				been working at XXX. </p>
+				<p>An example view that presents a "table report": A table with employees' information including each employee's total number of registered events, total 
+				donation amount, number of different teams participated, and number of team awards received.</p>
+				<img src="info340/CISCO_Revised.jpg" alt="ERD" height="700px" width="600px"/>
+				<p><i>(1) The ERD of the Database</i></p>
+				<br/>
+				<hr/>
+				
+
+			</div>
+			
+			<div id="pusher"></div> 
+		</div> 
+		<div id="footer"><p id="copyright">by Yi-Ting Tsai, 2018</p></div>
+	</body>
+
+</html>

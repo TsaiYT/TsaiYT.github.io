@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My Project Portfolio</title>
+		<meta charset="utf-8" />
+		<link href="portfolio.css" type="text/css" rel="stylesheet" />
+		<link rel="icon" type="image/png" href="uwFavicon.png">
+	</head>
+	
+	<body>
+		<div id="wrapper">
+			<div id="header"><h1>Yi-Ting Tsai <br/>My Project Portfolio</h1></div>
+				
+			<ul id="navigator">
+				<li class="naviItems"><a href="portfolioHome.html">Home</a></li>
+				<li class="naviItems"><a id="nowItem" href="portfolioEE.html">Digital Signal &amp; Image Processing Projects</a></li>
+				<li class="naviItems"><a href="portfolioOther.html">Other Projects</a></li>
+			</ul>
+			
+			<div id="introBlock">
+				<h2>Digital Signal &amp; Image Processing Projects</h2>
+				
+				<p class="subtitle">Advanced Driver Assistance Systems Image Analysis :</p>
+				<p><span>Associated Course:</span> Electrical Engineering Entrepreneurial Capstone</p>
+				<p><span>Industrial Sponsor:</span> Daimler Trucks North America</p>
+				<p><span>Key Words:</span> Computer Vision, Object Detection, Inverse Perspective Mapping, Projective Transformation, Advanced Driver Assistance Systems (ADAS), CAN Bus, Image Processing, Image Filtering, Machine Learning, Deep Learning, Single Shot MultiBox Detector (SSD), TensorFlow, OpenCV, Python, Linux enviornment, GPU, Project Management</p>
+				<p><span>Description:</span> Daimler Trucks North America (DTNA) uses radar systems to monitor the right-side blindspot on their trucks in order to give warnings to the driver about moving objects present. Currently, one of such systems can indicate to the driver that an object is in the blindspot when nothing is actually present. One known example is that the radar system can detect the truck’s trailer and send warnings about it, even though the truck will not hit its own trailer. The only way to detect these false warnings is to manually search through the camera footage of this blindspot and find them at random. This process is very time-consuming, but is necessary if the radar system is to be evaluated and improved.</p>
+				<p>The work in our project aims to create a program that uses image analysis techniques to automatically find false warnings from thousands of data packages. It will save a lot of effort that was previously used to evaluate the radar system manually. To find false warnings, we developed our own object detector using deep learning. By comparing the results of our image analysis program and the radar system data from the trucks' Controller Area Network (CAN) busses, our system generates reports indicating when and where these instances of false warnings occurred for Daimler’s engineers to analyze and improve their radar system.</p>
+				<img src="ee498/system.jpg" alt="498project(a)" height="200px" width="520px"/>
+				<p><i>(1) High-level system block diagram</i></p>
+				<p>The project was done by a team of three. As the Project Manager/Image Analysis Engineer, my personal achievements are as follows:</p>
+				<ul>
+					<li>Trained a Single Shot MultiBox Detector (SSD) model for vehicle detection using TensorFlow and Python</li>
+					<img src="ee498/image00428.jpg" alt="498project(b)" height="200px" width="300px"/>
+					<li>Collected, organized, and labelled image data for training</li>
+					<li>Expanded the training data set by generating new image data from available data using image augmentation</li>
+					<img src="ee498/augmentation.jpg" alt="498project(c)" height="120px" width="500px"/>
+					<li>Implemented an algorithm that estimates the real-world coordinates of detected vehicles relative to the truck using inverse pespective mapping through OpenCV</li>
+					<img src="ee498/transform.jpg" alt="498project(d)" height="200px" width="600px"/>
+					<li>Created detailed timelines to clarify every team member's responsibility and schedule</li>
+					<li>Communicated between the team, Daimler, and the UW faculty to ensure that the project was on track to achieve milestones</li>
+					<li>Researched on various image analysis techniques and provided guidance to teammates on how we could realistically use them</li>
+				</ul>
+				<p>For reference below is a sample video showing the image outpus of our image analysis program. Our image anlysis program also outputs timestamps and detection information (detected objects and their coordinates) into a CSV file for comparison with the radar system outputs.</p>
+				<iframe width="400" height="300" src="https://www.youtube.com/embed/4MtuG9IGSpI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>Your browser does not support iframe tag.</iframe>
+				<br/>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle">Real-time Musical Instrument Conversion :</p>
+				<p><span>Associated Course:</span> Design and Application of Digital Signal Processing</p>
+				<p><span>Key Words:</span> Digital Signal Processing (DSP), Real-time System, Pitch Deteciton, Tone Deteciton, Music Synthesis, Digital Sound Signal, Audio Signal Framing, Power Spectral Density (PSD), Discrete Fourier Transform (DFT), Fast Fourier Transform (FFT), Frequency Modulation, Low-pass Filter, Embedded Systems, Circular Buffer, Digital Signal Processor, TI C6748 DSP Development Kit (LCDK), C, Matlab GUI, UART</p>
+				<p><span>Description:</span> In this project, we implemented a real-time system that detects the tones of input audio signals and synthesizes the tones into musical instrument sounds of the user’s choice (out of available options) in a TI C6748 DSP Development Kit with C. For example, our system will recognize the music notes from the input and output a new version as if played by a plucked string instrument or a woodwind instrument. In addition, through UART, tone detection results will be displayed in a Matlab GUI in real time. Based on the project deliverables, this project was divided into the following three main sections: frequency detection, instrument synthesis, and user interface.
+				</p>
+				<p>Our frequency detection algorithm used the classic Power Spectral Density Method. However, we added some steps to increase its performance. For example, the issue of low frequency resolution when applying FFT to signal frames was solved by using the Weighted Averge Estimation method to get a more precise detected frequency index. Some conditional statements were used to overcome the issue of overtones in instruments like piano too.
+				</p>
+				<p>For musical instrument sound synthesis, we decided to synthesize the following three instruments: bells, clarinet, and banjo-guitar. The first two were done by frequnecy modulation. The last one was achieved by the Karplus-Strong Algorithm.
+				</p>
+				<p>For the user interface, firstly, the user controls the input to the LCDK through Line-in. User can choose to play a pre-recorded song or generate tones through an online piano and send the results to the LCDK in real time. Secondly, the user can change the synthesized instrument by changing the switches on the LCDK. Finally, tone detection results will be displayed in a Matlab GUI.
+				</p>
+				<img src="ee443/board.jpg" alt="443project(a)" height="400" width="580"/>
+				<p><i>(1) Testing our system</i></p>
+				<p>Below is a demo video. At first the original input music was played (the laptop on the left). Next, we tried to convert the input music into clarinet sounds in real time, then into banjo-guitar sounds (the laptop on the right). At last, we tried to convert input sounds from a virtual piano into sounds of all of the three musical instruments we had.</p>
+				<iframe width="400" height="300" src="https://www.youtube.com/embed/afe-71Oa-7c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>Your browser does not support iframe tag.</iframe>
+				<br/>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle">Transition​ ​Detection​ ​and​ ​Reconstruction​ ​of​ ​Signals Corrupted​ ​by​ ​Additive​ ​White​ ​Gaussian​ ​Noise :</p>
+				<p><span>Associated Course:</span> Random Signals for Communications and Signal Processing</p>
+				<p><span>Keys Words:</span> Digital Signal Processing, Matlab, Signal Filtering, Signal Reconstruction, AWGN Reduction, 
+				FIR Moving Average Filter, IIR One-Pole Autoregressive Filter, Matched Filter, Template Matching</p>
+				<p><span>Description:</span> In this project, I successfully reconstructed signal x from a received noisy signal r = x + σw in Matlab, given <br/>1) 
+				the original signal x consists of about L = 20 segments, and each segment is a constant slope (1 or -1) of random duration <br/>2) σw is 
+				Additive White Gaussian Noise (AWGN) of zero mean and unit variance, scaled by a factor σ.</p>
+				<p>Deriving x requires us to extract a smooth curve out of r. In order to get the curve, the first step we did was to reduce 
+				AWGN by applying a low-pass filter. After trying both a Moving Average (FIR) Filter and an one-pole Autoregressive (IIR) 
+				Filter, we found that there is always a trade-off between signal stability (the output is unstable) and dynamics accuracy 
+				(the output is delayed).</p>
+				<img src="ee416/fig1.jpg" alt="416project(a)" height="300px" width="520px"/>
+				<p><i>(1) Low-pass filter results</i></p>
+				<p>However, observations drawn from numerous simulations with different filter coefficients showed that in the moving average 
+				filter’s case, the delay time is constant and can be approximated by half of the filter’s averaging size. After shifting the 
+				filtered result to the left, we derived a moderately stablized curve.</p>
+				<img src="ee416/fig4.jpg" alt="416project(b)" height="300px" width="570px"/>
+				<p><i>(2) The shifted moving average filter output compared with the original signal x we want to reconstruct</i></p>
+				<p>Yet the filtered signal was still too noisy. After observing the failure of using a low-pass filter alone, we proposed that instead of simply
+				looking at the filter outputs, we can use them to detect transition points first. A matched filter was used to do so. After getting
+				a moderately stabilized curve from the low-pass filter, by matching the curve with a corner template, we can get a perfectly smooth curve 
+				whose transition points can be derived from the Matlab findpeaks() function directly.</p>
+				<p>These transition points are critical to reconstructing a signal composed of linear segments. By creating linear equations 
+				based on the information of slopes we know and the positions of the signals’ local maxima and minima we found, we successfully 
+				reconstructed signal x from the noisy signal r.</p>
+				<img src="ee416/fig2.jpg" alt="416project(c)" height="300px" width="500px"/>
+				<img src="ee416/fig7.jpg" alt="416project(d)" height="300px" width="550px"/>
+				<p><i>(3) Matched filtered result - transition points (local extrema) can now be detected easily (4) The reconstructed signal</i></p>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle">Image Artistic Stylization – Watercolor Effect:</p>
+				<p><span>Associated Course:</span> Digital Imaging Systems</p>
+				<p><span>Keys Words:</span> Digital Image Processing, Matlab, Image Filtering, Morphological Operations, GUI</p>
+				<p><span>Description:</span> In this project, I implemented a simple graphic user interface (GUI) that can load an image 
+				and apply watercolor effects on it in Matlab. After using a median filter to reduce noise, by performing closing and then opening with different 
+				sizes of structuring elements on the target image (which were done by erosion, dilation, another dilation, and then another erosion), I was able
+				to generate the effects.</p>
+				<img src="ee440lab/smallsize.jpg" alt="440project(a)" height="400px" width="800px"/>
+				<p><i>(1) Example of using the interface (small brush size)</i></p>
+				<img src="ee440lab/largesize.jpg" alt="440project(b)" height="400px" width="800px"/>
+				<p><i>(2) Example of using the interface (large brush size)</i></p>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle">Histogram-based Image Enhancement:</p>
+				<p><span>Associated Course:</span> Digital Imaging Systems</p>
+				<p><span>Keys Words:</span> Image Enhancement, Matlab, Histogram Equalization, Histogram Specification, Linear Stretching, RGB, HSV</p>
+				<p><span>Description:</span> In this project, I implemented my own functions for linear stretching, histogram equalization and specification</a> 
+				in Matlab. After changing RGB images to HSV, by stretching the distributions of them, equalizing the histograms of them, or matching them to another image 
+				(distribution), I was able to adjust and enhance their intensities in different ways.</p>
+				<img src="ee440lab/report2_1.jpg" alt="440hw3(a)" height="300px" width="520px"/>
+				<img src="ee440lab/report2_2.jpg" alt="440hw3(b)" height="300px" width="520px"/>
+				<p><i>(1) The original images (each column shows: image, histogram of image intensity levels, cdf of image intensity levels) (2) After using linear stretching</i></p>
+				<img src="ee440lab/report2_3.jpg" alt="440hw3(c)" height="300px" width="520px"/>
+				<img src="ee440lab/report2_4.jpg" alt="440hw3(d)" height="300px" width="520px"/>
+				<p><i>(3) After using histogram equalization (4) After using histogram specification with a self-defined normal distribution</i></p>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle">Elementary Music Synthesis:</p>
+				<p><span>Associated Course:</span> Discrete-Time Linear Systems</p>
+				<p><span>Keys Words:</span> Digital Sound Signal, Matlab, Sampling, Time Shifting, Scaling</p>
+				<p><span>Description:</span> In this project, using tones of various frequencies created from sine functions, we composed a segment of music consisted of whole, half, 
+				and fourth notes from the Scarborough Fair song in Matlab. We also improved the quality of the piece of music via two techniques: <br/>&nbsp;1) Applying the ADSR (Attack, Decay, 
+				Sustain, and Release) model and <br/>&nbsp;2) allowing the notes to overlap each other slightly.</p>
+				<img src="ee341lab/341lab1(a).jpg" alt="341lab1(a)" height="250px" width="260px"/>
+				<img src="ee341lab/341lab1(b).jpg" alt="341lab1(b)" height="250px" width="260px"/>
+				<img src="ee341lab/341lab1(c).jpg" alt="341lab1(c)" height="250px" width="260px"/>
+				<img src="ee341lab/341lab1(d).jpg" alt="341lab1(d)" height="250px" width="260px"/>
+				<p><i>(1) Graph of Magnitude of each note in the song (2) The ADSR model we used (3) The reconstructed sound signal after the implementation of our ADSR (4) 
+				The final signal with overlapped notes</i></p>
+				<audio controls>
+					<source src="ee341lab/song-original.wav" type="audio/wav">
+					Your browser does not support the audio element.
+				</audio>
+				<audio controls>
+					<source src="ee341lab/song-new.wav" type="audio/wav">
+					Your browser does not support the audio element.
+				</audio>
+				<p>The original synthesized musical notes &amp; The improved version</p>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle">Digital Filtering and Music Equalizer:</p>
+				<p><span>Associated Course:</span> Discrete-Time Linear Systems</p>
+				<p><span>Keys Words:</span> Digital Sound Signal, Matlab, Digital Filtering, Difference Equation, Convolution</p>
+				<p><span>Description:</span> In this project, we implemented different types of digital filters in Matlab and looked at their characterization in different domains to 
+				gain insight into their properties. After that, we designed a music equalizer using a low-pass filter, a band-pass filter, and a high-pass filter.</p>
+				<p>We implemented a 30-day moving average (low-pass) filter to a text file containing Microsoft stock price over 4 years to get the long-term 
+				(30 days as a unit instead of 1 day) trends of the stock price <br/>&nbsp;1) using the difference equation y[n]=1/30( x[n] + x[n-1] + … x[n-29] ) and the 
+				Matlab "y=filter(b,a,x)" function <br/>&nbsp;2) by performing convolution between the stock price data and the impulse response h[n]= 1/30(u[n] – u[n-30]) 
+				<br/>&nbsp;3) using a FIR filter of order 10 with cutoff frequency of 0.3pi created by Matlab function "fir1" <br/>&nbsp;4) using a low pass IIR filter with the same order and 
+				frequency created by Matlab function "butterworth".</p>
+				<img src="ee341lab/msStockprice1.jpg" alt="341lab4(a)" height="250px" width="300px"/>
+				<img src="ee341lab/msStockprice2.jpg" alt="341lab4(b)" height="250px" width="300px"/>
+				<p><i>(1) The original stock price graph and the filtered result using method 2 (2) The filtered results with methods 3 and 4</i></p>
+				<p>After that, we built a three-band equalizer by writing a function "equalizer" that takes gain terms G1, G2, G3 and the original signal x as inputs and returns the equalized 
+				signal as the output. The three filters (low-pass, high-pass, band-pass) were created with the Matlab "y=filter(b,a,x)" function.</p>
+				<img src="ee341lab/equalizerStruct.jpg" alt="341lab4(c)" height="250px" width="430px"/>
+				<img src="ee341lab/equalizer.jpg" alt="341lab4(d)" height="250px" width="320px"/>
+				<p><i>(3) Diagram for the three-channel equalizer (4) Filtered result of each channel with a piece of music (G1=G2=G3=1)</i></p>
+				<audio controls>
+					<source src="ee341lab/music-low.wav" type="audio/wav">
+					Your browser does not support the audio element.
+				</audio>
+				<audio controls>
+					<source src="ee341lab/music-high.wav" type="audio/wav">
+					Your browser does not support the audio element.
+				</audio>
+				<p>Filtered music with G1=1, G2=G3=0 &amp; Filtered music with G2=G3=1, G1=0</p>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle">Decoding Phone Numbers:</p>
+				<p><span>Associated Course:</span> Continuous-Time Linear Systems</p>
+				<p><span>Keys Words:</span> Touch-tone Signal, Matlab, Correlation, Frequency Domain, Fourier Transform</p>
+				<p><span>Description:</span> In this project, we used "fft" and "fftshift" functions in Matlab to perform Fourier Transforms on touch-tone signals to get the 
+				frequency(w) content in them. After comparing the total errors between the derived frequencies and the DTMF keypad frequencies, we can then classify the number 
+				representations of these touch-tone signals by finding the corresponding number that results in the minimum error (highest correlation). With these methods, we were 
+				then able to write a function that was applied to decode a phone number.</p>
+				<img src="ee235lab/a.jpg" alt="235lab(a)" height="250px" width="300px"/>
+				<img src="ee235lab/b.jpg" alt="341lab(b)" height="250px" width="300px"/>
+				<img src="ee235lab/c.jpg" alt="341lab(c)" height="250px" width="300px"/>
+				<p><i>(1) Example of getting the frequency content of a signal (2) Applying our function to a touch-tone signal (3) The decoded numbers</i></p>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle">Hashing for Painting Comparison:</p>
+				<p><span>Associated Course:</span> Data Structures and Algorithms</p>
+				<p><span>Keys Words:</span> Java, Hash Table, Data Structure, Linear Probing, Quadratic Probing, Feature Vector, Cosine Similarity, 
+				Color Space, Image Comparison</p>
+				<p><span>Description:</span> In this project, I implemented a hash table in Java and used it to measure the similarity of color tones between two input images.</p>
+				<p>To do so, firstly, I implemented a hash table whose dictionary entry is a pair, with a "ColorKey" as the key, and a nonnegative integer (a count) as the value. It has 
+				two collision-resolution policies: linear probing and quadratic probing. In the hash table, each ColorKey correponds to a color space (here we consider 
+				color spaces instead of simply colors because colors that look the same from human eyes are usually distinct to computers). Secondly, I scanned the two images to 
+				be compared pixel by pixel. During the process, I created two new hash tables and filled them by counting the number of pixels of each color space in each image. 
+				Thirdly, I extracted two feature vectors from the two filled hash tables (each feature vector describes how much of each color space is used in its corresponding 
+				image). Finally, by using cosine similarity, I was able to get a similarity value between the uses of colors in the two input images.</p>
+				<img src="cse373/cosineSimilarityFormula.png" alt="cosine" height="120px" width="400px"/>
+				<p><i>(1) Cosine Similarity Formula</i></p>
+				<img src="cse373/image1.jpg" alt="image1" height="350px" width="250px"/>
+				<img src="cse373/image2.jpg" alt="image2" height="200px" width="300px"/>
+				<p><i>(2)(3) Example Results: Similarity of Two Images = 0.95557</i></p>
+				<img src="cse373/image3.jpg" alt="image3" height="200px" width="300px"/>
+				<img src="cse373/image4.jpg" alt="image4" height="200px" width="300px"/>
+				<p><i>(4)(5) Example Results: Similarity of Two Images = 0.15188</i></p>
+				<p><i>(Image sources: 16411-presscdn-0-65.pagely.netdna-cdn.com, cdn3.bigcommerce.com, webneel.com)</i></p>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle">Labeling the Connected Components of an Image:</p>
+				<p><span>Associated Course:</span> Data Structures and Algorithms</p>
+				<p><span>Keys Words:</span> Java, Union-Find, Data Structure, Connected Components, Strict Pixel Graph, Image Processing, 
+				Binary Image</p>
+				<p><span>Description:</span> In this project, I used the Union-Find method to build a forest of up-trees for an input binary image 
+				and successfully labeled all the connected components in it.</p>
+				<p>The following steps were taken: <br/>(1) Turn the given binary image into a strict pixel graph G = (V, E), where V is the set of pixels, and E is 
+				the set of undirected edges, as E connects v0 = (x0, y0) with v1 = (x1, y1), given | x0 - x1 | + | y0 - y1 | = 1 and the colors of the two 
+				pixels are equal.<br/>(2) Assign each pixel a pixel ID (in order) and a -1 parent ID.<br/>(3) Implement Find, which returns a given pixel's parent ID; and Union, 
+				which takes two pixel ID values and makes the one having the smaller pixel ID value be the parent of the other.<br/>(4) Scan all the pixel pairs for which edges 
+				exist and perform Find-Union on all such pairs to build up each up-tree that represents each connected component.<br/>(5) Find the root of each pixel's up-tree 
+				and replace pixels whose parent ID = root's pixel ID with a new RGB color.</p>
+				<img src="cse373/savedimage.png" alt="gettysburg" height="400px" width="300px"/>
+				<img src="cse373/gettysburg-address-p1.png" alt="gettysburg-o" height="400px" width="300px"/>
+				<p><i>(1) The Labeled Image and (2) the Original Image (Gettysburg Address)</i></p>
+				<br/>
+				<hr/>
+				
+			</div>
+			
+			<div id="pusher"></div> 
+		</div> 
+		<div id="footer"><p id="copyright">by Yi-Ting Tsai, 2018</p></div>
+	</body>
+
+</html>
