@@ -21,33 +21,122 @@
 			<div id="introBlock">
 				<h2>Graduate Projects at JHU</h2>
 				
-				<p class="subtitle">Isolated-word Speech Recognizers :</p>
-				<p><span>Associated Course:</span> Information Extraction from Speech and Text</p>
-				<p><span>Key Words:</span> Speech recognition, HMM, phoneme, MFCC, Bi-LSTM, Python, PyTorch</p>
+				<ul>
+					<li><a href="#proj_speechRec">Part-of-speech Tagging</a></li>
+					<li><a href="#proj_speechRec">Isolated-word Speech Recognizers</a></li>
+					<li><a href="#proj_online">Online Blind Source Separation</a></li>
+					<li><a href="#proj_xray">Pneumonia Classification from X-ray Images</a></li>
+					<li><a href="#proj_lpc">Speech Communication Channel with LPC Compression</a></li>
+					<li><a href="#proj_mus">Music Source Separation with Noise</a></li>
+				</ul>
+				
+				<hr/>
+				<p class="subtitle" id="proj_speechRec">Part-of-speech Tagging :</p>
+				<p><span>Associated Course:</span> Natural Language Processing</p>
+				<p><span>Key Words:</span> Tagging, HMM, Viterbi algorithm, forward algorithm, dynamic programming, word embeddings, matrix operation, language model, maximum likelihood estimation, PyTorch</p>
+				<p><span>Description:</span> A bigram Viterbi tagger that can be run on English text data was implemented. E.g. Given a sentence: "In 1988 , the company earned $ 1.38 a share . ", 
+					a tagged sentence can be predicted: "In/I 1988/N ,/, the/D company/N earned/V $/$ _OOV_/C a/D share/N ./.", where OOV means out of vocabulary. Tags I, N, D, V, and C are individually preposition, noun, determiner, verb, and cadinal number.</p>
+				<p>Given a tag sequence <em>t</em> and a sentence with word sequence <em>w</em>, a tagged sentence is in the form of <em>w1/t1</em>, 
+				<em>w2/t2</em>... The probability of generating the words <em>w</em>—marginalizing out the tag sequence that produced
+					those words—can be computed by the forward algorithm according to the hidden Markov model (HMM):</p>
+				<img src="jhu/proj_tagging_forward_alg.jpg" alt="forward_alg" height="50" width="400px"/>
+				<p><i>(1) The forward algorithm, tag sequence not given (used for unsupervised learning)</i></p>
+				<p>If the tag sequence is given, the probability of generating the tagged words is then:</p>
+				<img src="jhu/proj_tagging_forward_alg2.jpg" alt="forward_alg2" height="50" width="260"/>
+				<p><i>(2) The forward algorithm, tag sequence given (used for supervised learning)</i></p>
+				<p>Here, <em>pA</em> represents the transition probability matrix, and <em>pB</em> represents the emission probability matrix. Softmax parameterization was 
+					applied on matrices <em>A</em> and <em>B</em> to derive <em>pA</em> and <em>pB</em>. <em>B</em> is set as the product of a tag weight matrix <em>Theta</em> and 
+					a pretrained word embeddings matrix <em>E</em>. By setting <em>A</em> and <em>Theta</em> as parameters, stochastic gradient descent (SGD) can be used to train the paramters 
+					to maximize their likelihood (log probabilities derived by the forward algorithm). Finally, after training the parameters, prediction of a tagged sentence can be
+					derived by the Viterbi algorithm, which finds the most probable tagging of <em>w</em>.</p> 
+				<p>The forward algorithm and its variant the Viterbi algorithm are implemented using matrix operations and dynamic programming, making computation efficient. Semi-supervised training
+					was done to increase tagging accuracy of unseen words. The parameters are first trained by labelled data, and then trained by labelled+raw data.</p> 
 				<br/>
 				<hr/>
 				
-				<p class="subtitle">Online Blind Source Separation :</p>
+				<p class="subtitle" id="proj_speechRec">Isolated-word Speech Recognizers :</p>
 				<p><span>Associated Course:</span> Information Extraction from Speech and Text</p>
-				<p><span>Key Words:</span> Adaptive beamforming, Embedded system, C, Source separation, Sound localization, Online learning</p>
+				<p><span>Key Words:</span> Speech recognition, HMM, phoneme, forward-backward algorithm, MFCC, Bi-LSTM, CTC loss, Python, PyTorch</p>
+				<p><span>Description:</span> Two isolated-word speech recognizers for a vocabulary of 48 words are built and compared. 
+				One uses phoneme-based HMMs, and the other uses MFCC-based Bidirectional LSTMs.</p>
+				<p>The first is the classic HMM-based recognizer. Phonemes of speech samples are given 
+					as the observed acoustic features. A 3-state HMM is created for each English letter, and a 5-state HMM is created for silence. A word HMM is 
+					formed by concatenating the letter HMMs and appending the silence HMM to the beginning and the end of the composite. 48 word HMMs are formed. The transition and emission 
+					matrices in the word HMMs are trained by the forward-backward algorithm. When performing speech recognition, based on given acoustic features, 
+					the word whose HMM computes the highest likelihood is predicted.</p>
+				<p>The second is a recurrent neural network based recognizer. The MFCC coefficients of each speech sample are the input acoustic features. 
+					The spelling of each word is the output label-sequence for its speech. A "silence" symbol is padded on each side of the output sequence.
+					A 2-layer Bi-LSTM model is trained by CTC loss. To recognize the word of an input speech sample, first its MFCC coefficients will be computed, 
+					then spelings are estimated from the trained model. After that, CTC losses between the model output spelling and the silence-padded spellings of 
+					the 48 known words are checked. The word with the lowest loss will be the predicted word.</p>
+				<p> A 5% increase in validation accuracy is observed using the second recognizer. 
 				<br/>
 				<hr/>
 				
-				<p class="subtitle">Pneumonia Classification from X-ray Images :</p>
+				<p class="subtitle" id="proj_online">Online Blind Source Separation :</p>
+				<p><span>Associated Course:</span> Machine Intelligence on Embedded Systems</p>
+				<p><span>Key Words:</span> Adaptive beamforming, Embedded system, C, Source separation, Sound localization, ICA, Online learning</p>
+				<p><span>Description:</span> Gradient Flow Adaptive Beamforming (with the iterative Herault-Jutten algorithm) is implemented in C to 
+					achieve online blind source separation and localization on a STEVAL-STWINMAV1 microphone array (4 mics).</p>
+				<p>Gradient Flow Adaptive Beamforming with ICA <a href="https://ieeexplore.ieee.org/document/5745538" target="_blank">[1]</a> is an approach that can achieve source separation and 
+					localization in a miniature microphone array at the same time. The approach consists of two key components: 
+					(1) Gradient flow computation for localization and (2) ICA for separation. Gradient flow converts the problem of 
+					separating unknown delayed mixtures of sources from un-mixing mic signals directly, to separating
+					the derivatives of the mic signals. By relating spatial and temporal derivatives of the field observed
+					over a miniature sensor array, localization can be achieved. When applied along with ICA,
+					the gradient flow changes the original <em>X = AS</em> mixing formulation into the following, where <em>L</em> = 3 for three 
+					sources, and each term in X represents the temporal and spatial derivatives of the mixtures: </p>
+				<img src="jhu/proj_embedded_alg.jpg" alt="embedded_alg" height="250" width="500"/>
+				<p>Each term in the mixing matrix A represents an angle coordinate that can be used to estimate the source angles. The mixing matrix <em>A</em> 
+					is updated by the online Herault-Jutten (H-J) algorithm instead of the standard ICA to enable real-time processing 
+					<a href="https://www.sciencedirect.com/science/article/abs/pii/016516849190079X" target="_blank">[2]</a>:</p>
+				<img src="jhu/proj_embedded_sim.jpg" alt="embedded_sim" height="300" width="550"/>
+				<br/>
+				<hr/>
+				
+				<p class="subtitle" id="proj_xray">Pneumonia Classification from X-ray Images :</p>
 				<p><span>Associated Course:</span> Machine Learning for Medical Applications</p>
 				<p><span>Key Words:</span> Image classification, CNN, data augmentation, X-ray images, Grad-CAM, transfer learning, image segmentation, Python, Keras</p>
+				<p><span>Description:</span> A Convolutional Neural Network (CNN) was trained on the Chest-X-Ray dataset with data augmentation to classify
+					pneumonia.</p>
+				<p>The CNN is implemented in Keras:</p>
+				<img src="jhu/proj_cnn.jpg" alt="med_cnn" height="400" width="400"/>
+				<p>Data augmentation: Brightness_range and zoom_range are used for augmentation since X-Ray images may vary 
+					in brightness and zoom scale due to equipment/environment conditions, and also change based on patients' 
+					postures and body sizes.</p>
+				<p>A macro F-1 score of 0.90 is achived with data augmentation, compared to the old score 0.66.</p>
+				<p>Gradient-weighted Class Activation Mapping (Grad-CAM) uses the gradients of any target concept flowing into the final convolutional layer to produce a coarse 
+					localization map highlighting the important regions in the image for predicting the concept. It is applied to visualize what the trained model is looking at.
+					In the image below, the heatmaps are clearly showing the important regions of the x-ray images to look out for in order to determine if a patient has pneumonia 
+					or not -- that is, if the heart border and the pleural margin are clear and sharp:</p>
+				<img src="jhu/proj_gradcam.png" alt="med_gradcam" height="300" width="400"/>
+				<p>Lung segmentation <a href="https://github.com/imlab-uiip/lung-segmentation-2d" target="_blank">[3]</a> and a pretrained Desnsenet finetuned by the segmented images are tested 
+					to see if performance can be improved. A macro F-1 score of 0.89 is achieved.</p>
 				<br/>
 				<hr/>
 				
-				<p class="subtitle">Speech Communication Channel with LPC Compression :</p>
+				<p class="subtitle" id="proj_lpc">Speech Communication Channel with LPC Compression :</p>
 				<p><span>Associated Course:</span> Audio Signal Processing</p>
 				<p><span>Key Words:</span> speech analysis, speech synthesis, LPC compression, MATLAB, voice detection, pitch detection</p>
+				<p><span>Description:</span></p>
+				<ul>
+					<li><p>Designed a speech communication channel using the LPC compression and synthesis scheme in MATLAB</p></li>
+					<li><p>Implemented a voice detector and a pitch detector to assist in the LPC compression scheme</p></li>
+					<li><p>Evaluated the compression scheme with PESQ and the mean amount of information required for transmission</p></li>
+				</ul>
+				<p>Details can be seen <a href="jhu/ASP_report.pdf" target="_blank">here</a>.</p>
 				<br/>
 				<hr/>
 				
-				<p class="subtitle">Music Source Separation with Noise :</p>
+				<p class="subtitle" id="proj_mus">Music Source Separation with Noise :</p>
 				<p><span>Associated Course:</span> Deep Learning</p>
-				<p><span>Key Words:</span> U-Net, data augmentation</p>
+				<p><span>Key Words:</span> U-Net, data augmentation, spleeter</p>
+				<p><span>Description:</span></p>
+				<ul>
+					<li><p>Studied noise’s effect on the performance of music source separation done by U-Net and Bidirectional LSTM</p></li>
+					<li><p>Explored multiple variations of music data augmentation to improve the performance</p></li>
+				</ul>
+				<p>Details can be seen in the <a href="jhu/Deep_Learning_Final_Project.pdf" target="_blank">report</a>.</p>
 				<br/>
 				<hr/>
 				
