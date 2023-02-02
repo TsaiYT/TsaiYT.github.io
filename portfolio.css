@@ -10,7 +10,7 @@ body, html {
 }
 
 .intro {
-	font-size: 150%;
+	font-size: 120%;
 	font-family: "Goudy Old Style", "Arial Narrow", Serif;
 	margin-top: 10px;
 }
@@ -97,7 +97,7 @@ h3 {
 }
 
 .subtitle {
-	font-size: 200%;
+	font-size: 150%;
 	font-family: "Century Gothic", "Avant Garde", Sans-serif;
 }
 

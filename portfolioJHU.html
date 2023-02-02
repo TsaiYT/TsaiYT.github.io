@@ -39,10 +39,10 @@
 				<p>Given a tag sequence <em>t</em> and a sentence with word sequence <em>w</em>, a tagged sentence is in the form of <em>w1/t1</em>, 
 				<em>w2/t2</em>... The probability of generating the words <em>w</em>—marginalizing out the tag sequence that produced
 					those words—can be computed by the forward algorithm according to the hidden Markov model (HMM):</p>
-				<img src="jhu/proj_tagging_forward_alg.jpg" alt="forward_alg" height="50" width="400px"/>
+				<img src="jhu/proj_tagging_forward_alg.JPG" alt="forward_alg" height="50" width="400px"/>
 				<p><i>(1) The forward algorithm, tag sequence not given (used for unsupervised learning)</i></p>
 				<p>If the tag sequence is given, the probability of generating the tagged words is then:</p>
-				<img src="jhu/proj_tagging_forward_alg2.jpg" alt="forward_alg2" height="50" width="260"/>
+				<img src="jhu/proj_tagging_forward_alg2.JPG" alt="forward_alg2" height="50" width="260"/>
 				<p><i>(2) The forward algorithm, tag sequence given (used for supervised learning)</i></p>
 				<p>Here, <em>pA</em> represents the transition probability matrix, and <em>pB</em> represents the emission probability matrix. Softmax parameterization was 
 					applied on matrices <em>A</em> and <em>B</em> to derive <em>pA</em> and <em>pB</em>. <em>B</em> is set as the product of a tag weight matrix <em>Theta</em> and 
@@ -86,11 +86,11 @@
 					over a miniature sensor array, localization can be achieved. When applied along with ICA,
 					the gradient flow changes the original <em>X = AS</em> mixing formulation into the following, where <em>L</em> = 3 for three 
 					sources, and each term in X represents the temporal and spatial derivatives of the mixtures: </p>
-				<img src="jhu/proj_embedded_alg.jpg" alt="embedded_alg" height="250" width="500"/>
+				<img src="jhu/proj_embedded_alg.JPG" alt="embedded_alg" height="250" width="500"/>
 				<p>Each term in the mixing matrix A represents an angle coordinate that can be used to estimate the source angles. The mixing matrix <em>A</em> 
 					is updated by the online Herault-Jutten (H-J) algorithm instead of the standard ICA to enable real-time processing 
 					<a href="https://www.sciencedirect.com/science/article/abs/pii/016516849190079X" target="_blank">[2]</a>:</p>
-				<img src="jhu/proj_embedded_sim.jpg" alt="embedded_sim" height="300" width="550"/>
+				<img src="jhu/proj_embedded_sim.JPG" alt="embedded_sim" height="300" width="550"/>
 				<br/>
 				<hr/>
 				
@@ -100,7 +100,7 @@
 				<p><span>Description:</span> A Convolutional Neural Network (CNN) was trained on the Chest-X-Ray dataset with data augmentation to classify
 					pneumonia.</p>
 				<p>The CNN is implemented in Keras:</p>
-				<img src="jhu/proj_cnn.jpg" alt="med_cnn" height="400" width="400"/>
+				<img src="jhu/proj_cnn.JPG" alt="med_cnn" height="400" width="400"/>
 				<p>Data augmentation: Brightness_range and zoom_range are used for augmentation since X-Ray images may vary 
 					in brightness and zoom scale due to equipment/environment conditions, and also change based on patients' 
 					postures and body sizes.</p>
